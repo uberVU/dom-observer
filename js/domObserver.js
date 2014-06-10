@@ -1,4 +1,10 @@
-define([], function () {
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else {
+    window.DOMObserver = factory();
+  }
+}(this, function() {
     var MutationObserver = window.MutationObserver ||
                            window.WebKitMutationObserver ||
                            window.MozMutationObserver;
@@ -54,4 +60,4 @@ define([], function () {
     };
 
     return DOMObserver;
-});
+}));
