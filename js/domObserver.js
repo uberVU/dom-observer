@@ -1,9 +1,9 @@
 (function (root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else {
-    window.DOMObserver = factory();
-  }
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else {
+        window.DOMObserver = factory();
+    }
 }(this, function() {
     var MutationObserver = window.MutationObserver ||
                            window.WebKitMutationObserver ||
@@ -25,15 +25,15 @@
                     var mutation = mutations[i];
                     // handle added nodes
                     if (opts.addedNodeHandler) {
-                      Array.prototype.forEach.call(mutation.addedNodes, opts.addedNodeHandler);
+                        Array.prototype.forEach.call(mutation.addedNodes, opts.addedNodeHandler);
                     }
                     // handle removed nodes
                     if (opts.removedNodeHandler) {
-                      Array.prototype.forEach.call(mutation.removedNodes, opts.removedNodeHandler);
+                        Array.prototype.forEach.call(mutation.removedNodes, opts.removedNodeHandler);
                     }
                     // handle changed node
                     if (opts.mutationHandler) {
-                      opts.mutationHandler(mutation.target);
+                        opts.mutationHandler(mutation.target);
                     }
                 }
                 return false;
@@ -51,22 +51,22 @@
             // in order to satisfy the input parameter condition
             this.handlers = {};
             if (opts.addedNodeHandler) {
-              this.handlers.addedNodeHandler = function (e) { opts.addedNodeHandler(e.target); };
+                this.handlers.addedNodeHandler = function (e) { opts.addedNodeHandler(e.target); };
             }
             if (opts.removedNodeHandler) {
-              this.handlers.removedNodeHandler = function (e) { opts.removedNodeHandler(e.target); };
+                this.handlers.removedNodeHandler = function (e) { opts.removedNodeHandler(e.target); };
             }
             if (opts.mutationHandler) {
-              this.handlers.mutationHandler = function (e) {
-                // make sure attr that changed is within filtered attrs
-                if (!opts.attributeFilter ||
-                    (opts.attributeFilter &&
-                     e.attrChange === 1 &&
-                     opts.attributeFilter.indexOf(e.attrName) > -1)) {
+                this.handlers.mutationHandler = function (e) {
+                    // make sure attr that changed is within filtered attrs
+                    if (!opts.attributeFilter ||
+                        (opts.attributeFilter &&
+                         e.attrChange === 1 &&
+                         opts.attributeFilter.indexOf(e.attrName) > -1)) {
 
-                    opts.mutationHandler(e.target);
-                }
-              };
+                        opts.mutationHandler(e.target);
+                    }
+                };
             }
 
             node.addEventListener("DOMNodeInserted", this.handlers.addedNodeHandler);
