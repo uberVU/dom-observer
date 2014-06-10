@@ -9,13 +9,14 @@
                            window.WebKitMutationObserver ||
                            window.MozMutationObserver;
 
-    /* opts should be an object with following possible keys:
-     * addedNodeHandler - takes a DOM node (that was added)
-     * removedNodeHandler - takes a DOM node (that was removed)
-     * mutationHandler - takes a DOM node (that was changed)
-     * attributeFilter - array of attribute names that should be observed
+    /* @param node DOM node on which to observe mutations
+     * @param opts object with following possible keys:
+     *    addedNodeHandler - takes a DOM node (that was added)
+     *    removedNodeHandler - takes a DOM node (that was removed)
+     *    mutationHandler - takes a DOM node (that was changed)
+     *    attributeFilter - array of attribute names that should be observed
      */
-    var DOMObserver = function (opts) {
+    var DOMObserver = function (node, opts) {
         if (MutationObserver) {
             this.observer = new MutationObserver(function (mutations) {
                 for (var i = 0; i < mutations.length; i++) {
@@ -36,7 +37,7 @@
                 return false;
             });
 
-            this.observer.observe(document, {
+            this.observer.observe(node, {
                 childList: true,
                 subtree: true,
                 attributes: true, // Listen for attribute changes as well.
@@ -44,9 +45,9 @@
                 attributeFilter: opts.attributeFilter
             });
         } else if (document.addEventListener) {
-            document.addEventListener("DOMNodeInserted", opts.addedNodeHandler);
-            document.addEventListener("DOMNodeRemoved", opts.removedNodeHandler);
-            document.addEventListener("DOMAttrModified", opts.mutationHandler);
+            node.addEventListener("DOMNodeInserted", opts.addedNodeHandler);
+            node.addEventListener("DOMNodeRemoved", opts.removedNodeHandler);
+            node.addEventListener("DOMAttrModified", opts.mutationHandler);
         } else {
             console.log("DOM Observer does not support this browser.");
         }
@@ -57,9 +58,9 @@
             if (MutationObserver) {
                 this.observer.disconnect();
             } else {
-                document.removeEventListener("DOMNodeInserted", opts.addedNodeHandlert);
-                document.removeEventListener("DOMNodeRemoved", opts.removedNodeHandler);
-                document.removeEventListener("DOMAttrModified", opts.mutationHandler);
+                node.removeEventListener("DOMNodeInserted", opts.addedNodeHandlert);
+                node.removeEventListener("DOMNodeRemoved", opts.removedNodeHandler);
+                node.removeEventListener("DOMAttrModified", opts.mutationHandler);
             }
         }
     };
