@@ -57,9 +57,9 @@
             if (MutationObserver) {
                 this.observer.disconnect();
             } else {
-                document.addEventListener("DOMNodeInserted", opts.addedNodeHandlert);
-                document.addEventListener("DOMNodeRemoved", opts.removedNodeHandler);
-                document.addEventListener("DOMAttrModified", opts.mutationHandler);
+                document.removeEventListener("DOMNodeInserted", opts.addedNodeHandlert);
+                document.removeEventListener("DOMNodeRemoved", opts.removedNodeHandler);
+                document.removeEventListener("DOMAttrModified", opts.mutationHandler);
             }
         }
     };
