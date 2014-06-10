@@ -33,7 +33,7 @@
                     }
                     // handle changed node
                     if (opts.mutationHandler) {
-                      opts.mutationHandler(mutation);
+                      opts.mutationHandler(mutation.target);
                     }
                 }
                 return false;
