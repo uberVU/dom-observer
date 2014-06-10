@@ -39,7 +39,7 @@
                 attributeFilter: attributeFilter
             });
         } else if (document.addEventListener) {
-            document.addEventListener("DOMNodeInserted", addedNodeHandlert);
+            document.addEventListener("DOMNodeInserted", addedNodeHandler);
             document.addEventListener("DOMNodeRemoved", removedNodeHandler);
             document.addEventListener("DOMAttrModified", mutationHandler);
         } else {
