@@ -57,7 +57,16 @@
               this.handlers.removedNodeHandler = function (e) { opts.removedNodeHandler(e.target); };
             }
             if (opts.mutationHandler) {
-              this.handlers.mutationHandler = function (e) { opts.mutationHandler(e.target); };
+              this.handlers.mutationHandler = function (e) {
+                // make sure attr that changed is within filtered attrs
+                if (!opts.attributeFilter ||
+                    (opts.attributeFilter &&
+                     e.attrChange === 1 &&
+                     opts.attributeFilter.indexOf(e.attrName) > -1)) {
+
+                    opts.mutationHandler(e.target);
+                }
+              };
             }
 
             node.addEventListener("DOMNodeInserted", this.handlers.addedNodeHandler);
