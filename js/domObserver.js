@@ -9,24 +9,29 @@
                            window.WebKitMutationObserver ||
                            window.MozMutationObserver;
 
-    var DOMObserver = function (addedNodeHandler, removedNodeHandler,
-                                mutationHandler, attributeFilter) {
-
-        this.addedNodeHandler = addedNodeHandler;
-        this.removedNodeHandler = removedNodeHandler;
-        this.mutationHandler = mutationHandler;
-        this.attributeFilter = attributeFilter;
-
+    /* opts should be an object with following possible keys:
+     * addedNodeHandler - takes a DOM node (that was added)
+     * removedNodeHandler - takes a DOM node (that was removed)
+     * mutationHandler - takes a DOM node (that was changed)
+     * attributeFilter - array of attribute names that should be observed
+     */
+    var DOMObserver = function (opts) {
         if (MutationObserver) {
             this.observer = new MutationObserver(function (mutations) {
                 for (var i = 0; i < mutations.length; i++) {
                     var mutation = mutations[i];
                     // handle added nodes
-                    Array.prototype.forEach.call(mutation.addedNodes, addedNodeHandler);
+                    if (opts.addedNodeHandler) {
+                      Array.prototype.forEach.call(mutation.addedNodes, opts.addedNodeHandler);
+                    }
                     // handle removed nodes
-                    Array.prototype.forEach.call(mutation.removedNodes, removedNodeHandler);
+                    if (opts.removedNodeHandler) {
+                      Array.prototype.forEach.call(mutation.removedNodes, removedNodeHandler);
+                    }
                     // handle changed node
-                    mutationHandler(mutation);
+                    if (opts.mutationHandler) {
+                      opts.mutationHandler(mutation);
+                    }
                 }
                 return false;
             });
@@ -36,12 +41,12 @@
                 subtree: true,
                 attributes: true, // Listen for attribute changes as well.
                 attributeOldValue: true, // Pass in the old attribute value
-                attributeFilter: attributeFilter
+                attributeFilter: opts.attributeFilter
             });
         } else if (document.addEventListener) {
-            document.addEventListener("DOMNodeInserted", addedNodeHandler);
-            document.addEventListener("DOMNodeRemoved", removedNodeHandler);
-            document.addEventListener("DOMAttrModified", mutationHandler);
+            document.addEventListener("DOMNodeInserted", opts.addedNodeHandler);
+            document.addEventListener("DOMNodeRemoved", opts.removedNodeHandler);
+            document.addEventListener("DOMAttrModified", opts.mutationHandler);
         } else {
             console.log("DOM Observer does not support this browser.");
         }
@@ -52,9 +57,9 @@
             if (MutationObserver) {
                 this.observer.disconnect();
             } else {
-                document.addEventListener("DOMNodeInserted", this.addedNodeHandlert);
-                document.addEventListener("DOMNodeRemoved", this.removedNodeHandler);
-                document.addEventListener("DOMAttrModified", this.mutationHandler);
+                document.addEventListener("DOMNodeInserted", opts.addedNodeHandlert);
+                document.addEventListener("DOMNodeRemoved", opts.removedNodeHandler);
+                document.addEventListener("DOMAttrModified", opts.mutationHandler);
             }
         }
     };
