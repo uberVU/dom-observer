@@ -27,7 +27,7 @@
                     }
                     // handle removed nodes
                     if (opts.removedNodeHandler) {
-                      Array.prototype.forEach.call(mutation.removedNodes, removedNodeHandler);
+                      Array.prototype.forEach.call(mutation.removedNodes, opts.removedNodeHandler);
                     }
                     // handle changed node
                     if (opts.mutationHandler) {
