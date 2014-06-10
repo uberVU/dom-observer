@@ -17,6 +17,8 @@
      *    attributeFilter - array of attribute names that should be observed
      */
     var DOMObserver = function (node, opts) {
+        this.node = node;
+
         if (MutationObserver) {
             this.observer = new MutationObserver(function (mutations) {
                 for (var i = 0; i < mutations.length; i++) {
@@ -45,9 +47,22 @@
                 attributeFilter: opts.attributeFilter
             });
         } else if (document.addEventListener) {
-            node.addEventListener("DOMNodeInserted", opts.addedNodeHandler);
-            node.addEventListener("DOMNodeRemoved", opts.removedNodeHandler);
-            node.addEventListener("DOMAttrModified", opts.mutationHandler);
+            // we need to call the handlers with the event.target item
+            // in order to satisfy the input parameter condition
+            this.handlers = {};
+            if (opts.addedNodeHandler) {
+              this.handlers.addedNodeHandler = function (e) { opts.addedNodeHandler(e.target); };
+            }
+            if (opts.removedNodeHandler) {
+              this.handlers.removedNodeHandler = function (e) { opts.removedNodeHandler(e.target); };
+            }
+            if (opts.mutationHandler) {
+              this.handlers.mutationHandler = function (e) { opts.mutationHandler(e.target); };
+            }
+
+            node.addEventListener("DOMNodeInserted", this.handlers.addedNodeHandler);
+            node.addEventListener("DOMNodeRemoved", this.handlers.removedNodeHandler);
+            node.addEventListener("DOMAttrModified", this.handlers.mutationHandler);
         } else {
             console.log("DOM Observer does not support this browser.");
         }
@@ -58,9 +73,9 @@
             if (MutationObserver) {
                 this.observer.disconnect();
             } else {
-                node.removeEventListener("DOMNodeInserted", opts.addedNodeHandlert);
-                node.removeEventListener("DOMNodeRemoved", opts.removedNodeHandler);
-                node.removeEventListener("DOMAttrModified", opts.mutationHandler);
+                this.node.removeEventListener("DOMNodeInserted", this.handlers.addedNodeHandler);
+                this.node.removeEventListener("DOMNodeRemoved", this.handlers.removedNodeHandler);
+                this.node.removeEventListener("DOMAttrModified", this.handlers.mutationHandler);
             }
         }
     };
