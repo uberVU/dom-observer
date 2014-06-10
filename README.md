@@ -42,3 +42,7 @@ observer.shutdown();
 is used for browsers that [support](http://caniuse.com/mutationobserver) it.
 [Mutation events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Mutation_events)
 are used as a fallback.
+
+## No dependencies
+
+DOMObserver has no external dependencies, download it and you are ready to go!
