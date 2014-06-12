@@ -46,3 +46,8 @@ are used as a fallback.
 ## No dependencies
 
 DOMObserver has no external dependencies, download it and you are ready to go!
+
+## AMD support
+
+You can either use DOMObserver via [requirejs](http://requirejs.org/), or just
+load it the old fashioned way with a `<script>` tag.
