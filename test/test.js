@@ -11,6 +11,7 @@ describe('DOMObserver', function () {
 
   afterEach(function () {
     container.innerHTML = null;
+
   });
 
   it('should call the handler on add', function (done) {
