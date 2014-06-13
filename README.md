@@ -51,3 +51,8 @@ DOMObserver has no external dependencies, download it and you are ready to go!
 
 You can either use DOMObserver via [requirejs](http://requirejs.org/), or just
 load it the old fashioned way with a `<script>` tag.
+
+## Running the tests
+
+Just open `test/test.html` in your browser.
+
