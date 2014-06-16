@@ -55,5 +55,5 @@ load it the old fashioned way with a `<script>` tag.
 ## Running the tests
 
 Just open `test/test.html` in your browser, or run `npm test` (it will use
-karme to run the tests in FF).
+karma to run the tests in FF).
 
