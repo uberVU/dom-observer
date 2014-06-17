@@ -4,10 +4,10 @@
     "devDependencies": {
         "mocha": "*",
         "chai" : "*",
-        "karma": "~0.10",
-        "karma-mocha": "~0.1"
+        "karma": "0.12.1",
+        "karma-mocha": "*"
     },
     "scripts": {
-        "test": "./node_modules/.bin/karma start --browsers Firefox --single-run"
+        "test": "./node_modules/karma/bin/karma start --browsers Firefox --single-run"
     }
 }
