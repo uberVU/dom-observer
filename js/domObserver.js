@@ -25,15 +25,15 @@
                     var mutation = mutations[i];
                     // handle added nodes
                     if (opts.addedNodeHandler) {
-                        Array.prototype.forEach.call(mutation.addedNodes, opts.addedNodeHandler);
+                        Array.prototype.forEach.call(mutation.addedNodes, opts.addedNodeHandler, mutation);
                     }
                     // handle removed nodes
                     if (opts.removedNodeHandler) {
-                        Array.prototype.forEach.call(mutation.removedNodes, opts.removedNodeHandler);
+                        Array.prototype.forEach.call(mutation.removedNodes, opts.removedNodeHandler, mutation);
                     }
                     // handle changed node
                     if (opts.mutationHandler) {
-                        opts.mutationHandler(mutation.target);
+                        opts.mutationHandler(mutation.target, mutation);
                     }
                 }
                 return false;
@@ -51,10 +51,10 @@
             // in order to satisfy the input parameter condition
             this.handlers = {};
             if (opts.addedNodeHandler) {
-                this.handlers.addedNodeHandler = function (e) { opts.addedNodeHandler(e.target); };
+                this.handlers.addedNodeHandler = function (e) { opts.addedNodeHandler(e.target, e); };
             }
             if (opts.removedNodeHandler) {
-                this.handlers.removedNodeHandler = function (e) { opts.removedNodeHandler(e.target); };
+                this.handlers.removedNodeHandler = function (e) { opts.removedNodeHandler(e.target, e); };
             }
             if (opts.mutationHandler) {
                 this.handlers.mutationHandler = function (e) {
@@ -64,7 +64,7 @@
                          e.attrChange === 1 &&
                          opts.attributeFilter.indexOf(e.attrName) > -1)) {
 
-                        opts.mutationHandler(e.target);
+                        opts.mutationHandler(e.target, e);
                     }
                 };
             }
