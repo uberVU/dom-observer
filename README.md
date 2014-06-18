@@ -15,7 +15,7 @@ The attributes for which to observe changes can be filtered.
 
 You create a `DOMObserver` and pass it the handlers you want. A handler can
 take the corresponding DOM node (inserted/removed/changed) as
-parameter.
+parameter, as well as the mutation (or mutation event, see *Browser Support*).
 
 ```javascript
 var observer = new DOMObserver(document.querySelector("#my-node"), {
@@ -23,7 +23,7 @@ var observer = new DOMObserver(document.querySelector("#my-node"), {
         console.log("Following node was added: " + addedNode);
     },
     attributeFilter: ["data-awesome"],
-    mutationHandler: function (changedNode) {
+    mutationHandler: function (changedNode, mutation) {
         console.log("Following node's data-awesome attribute was changed: " + changedNode);
     }
 });
@@ -51,3 +51,9 @@ DOMObserver has no external dependencies, download it and you are ready to go!
 
 You can either use DOMObserver via [requirejs](http://requirejs.org/), or just
 load it the old fashioned way with a `<script>` tag.
+
+## Running the tests
+
+Just open `test/test.html` in your browser, or run `npm test` (it will use
+karma to run the tests in FF).
+
