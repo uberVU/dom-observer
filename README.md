@@ -1,5 +1,7 @@
 # DOM Observer
 
+[![Build Status](https://travis-ci.org/uberVU/dom-observer.svg?branch=master)](https://travis-ci.org/uberVU/dom-observer)
+
 A library for easily tracking DOM mutations.
 
 You can set handlers for when:
