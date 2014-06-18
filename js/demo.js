@@ -1,7 +1,9 @@
 function printToBox(message) {
     var p = $("<p></p>");
+    var messageBox = $("#message-box");
     p.text(message);
-    $("#message-box").append(p);
+    messageBox.append(p);
+    messageBox.stop().animate({scrollTop: messageBox.prop('scrollHeight')}, 300);
 }
 
 window.onload = function () {
