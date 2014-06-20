@@ -1,0 +1,24 @@
+html, body {
+    background-color: rgb(248, 248, 248);
+}
+
+#message-box {
+    margin-top: 2rem;
+    height: 10rem;
+    overflow-y: auto;
+}
+
+#message-box p {
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+}
+
+#message-box:empty:before {
+    content:attr(data-placeholder);
+    color: #555;
+}
+
+#test-div {
+    min-height: 3rem;
+}
+
